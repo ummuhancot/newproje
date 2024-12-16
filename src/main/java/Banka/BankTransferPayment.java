@@ -1,4 +1,7 @@
 package Banka;
+
+import java.util.Scanner;
+
 /*
 * o BankTransferPayment Sınıfı: Bu alt sınıf aşağıdaki yöntemleri uygulamalıdır:
 
@@ -8,37 +11,26 @@ processPayment() (void döndürür): Bu yöntem, ödemeyi banka havalesiyle işl
 * */
 public class BankTransferPayment extends Ödeme{
 
+        String bankAccountNumber;
 
-    public BankTransferPayment(double amount, String currency) {
-        super(amount, currency);
-    }
-
-    public boolean validatePayment(String HesapNo){
-        if (!HesapNo.equals(HesapNo.replaceAll("[A-Za-z]","").trim())){
-            System.out.println("Yanlış karekter girdiniz");
-        }else {
-            System.out.println("İsleminiz devam ediyor lütfen bekleyiniz.");
+        public BankTransferPayment(double amount, String currency, String bankAccountNumber) {
+            super(amount, currency);
+            this.bankAccountNumber = bankAccountNumber;
         }
-        return HesapNo.length() == 10;
-    }
 
+        @Override
+        public boolean validatePayment() {
 
-    public void processPayment(){
-        System.out.println("İşleminiz banka havalesi olarak gercekleştiriliyor lütfen bekleyiniz.");
-    }
-
-    @Override
-    public boolean validatePayment(int OdemeTutari) {
-        try {
-            if (OdemeTutari <= 0) {
-                System.out.println("Geçersiz ödeme tutarı!");
-            }
-
-        }catch (Exception e){
-            throw new RuntimeException(e);
+            return bankAccountNumber.matches("\\d{10}");
         }
-        return false;
-    }
+
+        @Override
+        public void processPayment() {
+            System.out.println("Processing payment through Bank Transfer...");
+            System.out.println("Bank Transfer Payment Successful!");
+        }
+
+
 
 
 

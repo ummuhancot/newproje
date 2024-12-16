@@ -35,7 +35,72 @@ processPayment() (void döndürür): Bu yöntem, ödemeyi banka havalesiyle işl
      */
 public static Scanner input = new Scanner(System.in);
 
+    public static void main(String[] args) {
 
+        start();
 
+    }
+
+    private static void start() {
+
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            System.out.println("Enter payment type (CreditCard, BankTransfer, or 'exit' to quit): ");
+            String paymentType = scanner.nextLine();
+
+            if (paymentType.equalsIgnoreCase("exit")) {
+                break;
+            }
+
+            System.out.println("Enter the payment amount: ");
+            double amount = scanner.nextDouble();
+            scanner.nextLine();
+
+            System.out.println("Enter the currency: ");
+            String currency = scanner.nextLine();
+
+            Ödeme payment = null;
+
+            switch (paymentType.toLowerCase()) {
+                case "creditcard":
+                    System.out.println("Enter your 16-digit credit card number: ");
+                    String cardNumber = scanner.nextLine();
+
+                    payment = new CreditCardPayment(amount, currency, cardNumber);
+
+                    if (payment.validatePayment()) {
+                        payment.displayDetails();
+                        payment.processPayment();
+                    } else {
+                        System.out.println("Invalid Credit Card Number. Please try again.");
+                    }
+                    break;
+
+                case "banktransfer":
+                    System.out.println("Enter your 10-digit bank account number: ");
+                    String bankAccountNumber = scanner.nextLine();
+
+                    payment = new BankTransferPayment(amount, currency, bankAccountNumber);
+
+                    if (payment.validatePayment()) {
+                        payment.displayDetails();
+                        payment.processPayment();
+                    } else {
+                        System.out.println("Invalid Bank Account Number. Please try again.");
+                    }
+                    break;
+
+                default:
+                    System.out.println("Invalid payment type. Please try again.");
+                    break;
+            }
+
+            System.out.println();
+        }
+
+        scanner.close();
+        System.out.println("Program terminated.");
+    }
 
 }

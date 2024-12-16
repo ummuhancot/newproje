@@ -21,41 +21,23 @@ o void displayDetails(); Bu yöntem kullanıcıya ödeme tutarını ve para biri
 public abstract class Ödeme {
 
 
-    private double Amount;
-    private String currency;
+    double amount;
+    String currency;
 
 
     public Ödeme(double amount, String currency) {
-        Amount = amount;
-        this.currency = currency;
-    }
-
-    public double getAmount() {
-        return Amount;
-    }
-
-    public void setAmount(double amount) {
-        Amount = amount;
-    }
-
-    public String getCurrency() {
-        return currency;
-    }
-
-    public void setCurrency(String currency) {
+        this.amount = amount;
         this.currency = currency;
     }
 
 
 
     public abstract void processPayment();
+    public abstract boolean validatePayment();
 
-    public abstract boolean validatePayment(int Odeme);
 
-    public void displayDetails(){
-
-        System.out.println("Ödeme tutarı : " + Amount);
-        System.out.println("Para birimi : " + currency);
-
+    public void displayDetails() {
+        System.out.println("Payment Details:");
+        System.out.println("Amount: " + amount + " " + currency);
     }
 }

@@ -14,44 +14,26 @@ processPayment() (void döndürür): Bu yöntem, ödemeyi kredi kartı kullanara
 
 public class CreditCardPayment extends Ödeme{
 
-    public CreditCardPayment(double amount, String currency) {
+    String cardNumber;
+
+    public CreditCardPayment(double amount, String currency, String cardNumber) {
         super(amount, currency);
+        this.cardNumber = cardNumber;
     }
-
-    public boolean validatePayment(String CartNo) {
-
-        if (!CartNo.equals(CartNo.replaceAll("[A-Za-z]","").trim())){
-            System.out.println("Yanlış karekter girdiniz");
-        }else {
-            System.out.println("İsleminiz devam ediyor lütfen bekleyiniz.");
-        }
-        return CartNo.length() == 16;
-    }
-
-    public void processPayment(){
-
-        System.out.println("Ödemeye kredi kartı ile devame edilecek");
-
-
-    }
-/*
-o abstract boolean validatePayment(); Bu yöntem ödeme ayrıntılarını doğrulamalıdır. Belirli doğrulama mantığı alt sınıflarda olacaktır.
-*/
 
     @Override
-    public boolean validatePayment(int OdemeTutari) {
+    public boolean validatePayment() {
 
-       try {
-           if (OdemeTutari <= 0) {
-               System.out.println("Geçersiz ödeme tutarı!");
-           }
-
-       }catch (Exception e){
-           throw new RuntimeException(e);
-       }
-        return false;
+        return cardNumber.length() == 16;
     }
 
 
-
+    @Override
+    public void processPayment () {
+        System.out.println("Processing payment through Credit Card...");
+        System.out.println("Credit Card Payment Successful!");
+    }
 }
+
+
+

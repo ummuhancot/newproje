@@ -1,0 +1,112 @@
+
+/*
+Çevrimiçi Mağaza Envanter Sistemi Tasarımı
+
+### 1. Genel Sistem Özellikleri:
+- Kullanıcı Girişi ve Yönetimi:
+  - Müşteri hesapları oluşturulabilir, düzenlenebilir ve silinebilir.
+  - Kullanıcı girişi gereklidir (isteğe bağlı: sosyal medya veya e-posta ile giriş).
+
+
+- Ürün Yönetimi:
+  - Ürünlerin listelenmesi, kategorilere ayrılması ve aranabilir olması sağlanır.
+  - Ürün bilgileri: ad, fiyat, stok durumu, açıklama ve görseller.
+
+- Alışveriş Sepeti:
+  - Kullanıcılar birden fazla ürünü sepete ekleyebilir.
+  - Sepet toplamı ve ürün miktarları dinamik olarak hesaplanır.
+
+- Sipariş Yönetimi:
+  - Kullanıcılar sepetlerini inceleyip sipariş verebilir.
+  - Sipariş durumu takip edilebilir (örneğin, hazırlanıyor, kargoda, teslim edildi).
+
+- Envanter Yönetimi:
+  - Stok seviyeleri güncellenir.
+  - Stokta olmayan ürünler için otomatik bildirim veya rezerve edilebilirlik sağlanır.
+
+- Yedekleme:
+  - Envanter ve sipariş bilgileri map yapılarıyla bellekte tutulur ve düzenli aralıklarla veritabanına yedeklenir.
+
+---
+
+### 2. Teknik Yaklaşım (Nesne Yönelimli Tasarım):
+
+#### Sınıflar ve Görevleri
+1. Kullanıcı Sınıfı (User):
+   - Kullanıcı bilgilerini (ad, e-posta, şifre, adres, vb.) saklar.
+   - Kullanıcı rolleri (müşteri, admin) için özellikler eklenir.
+
+
+2. Ürün Sınıfı (Product):
+   - Ürün bilgilerini yönetir (ID, isim, kategori, fiyat, stok).
+   - Stok kontrolü sağlar (ürün eklendiğinde veya çıkarıldığında güncelleme).
+
+3. Sepet Sınıfı (Cart):
+   - Sepete eklenen ürünlerin listesini tutar (map kullanımı: ürün ID -> miktar).
+   - Sepet toplam fiyatını hesaplar.
+
+4. Sipariş Sınıfı (Order):
+   - Sipariş bilgilerini saklar (kullanıcı, ürünler, sipariş tarihi, durum).
+   - Siparişin durumunu günceller.
+
+5. Envanter Yönetim Sınıfı (InventoryManager):
+   - Ürün ekleme, güncelleme ve silme işlemlerini yönetir.
+   - Stok miktarını kontrol eder ve günceller.
+
+6. Yedekleme Sınıfı (BackupManager):
+   - Map veri yapıları (örneğin, Map<ProductID, ProductDetails>) kullanılarak geçici veriler tutulur.
+   - Belirli aralıklarla yedekleme yapılır.
+
+---
+
+### 3. Veri Yapıları ve Map Kullanımı:
+- Ürün Envanteri:
+  - Map<Integer, Product>: Ürün kimliği (ID) -> Ürün nesnesi.
+- Sepet Verisi:
+  - Map<Integer, Integer>: Ürün kimliği (ID) -> Miktar.
+- Sipariş Takibi:
+  - Map<Integer, Order>: Sipariş kimliği (ID) -> Sipariş nesnesi.
+- Kullanıcı Verileri:
+  - Map<String, User>: E-posta -> Kullanıcı nesnesi.
+
+---
+
+### 4. Çalışma Süreci:
+1. Kullanıcı Girişi veya Kaydı:
+   - Kullanıcı, giriş yaptıktan sonra ürünlere göz atabilir.
+
+2. Ürün Arama ve Filtreleme:
+   - Kullanıcı, ürünleri kategori, fiyat aralığı ve anahtar kelime ile filtreleyebilir.
+
+3. Sepete Ürün Ekleme:
+   - Ürün, sepete eklenir ve miktarı seçilebilir.
+   - Sepet toplamı ve stok kontrolü yapılır.
+
+4. Sipariş Verme:
+   - Kullanıcı sepeti onaylar, sipariş verir ve ödeme işlemi yapılır (entegre sistemler: kredi kartı, PayPal, vb.).
+
+5. Envanter Güncelleme:
+   - Satın alınan ürünlerin stok miktarları otomatik olarak azaltılır.
+
+6. Yedekleme:
+   - BackupManager düzenli aralıklarla map içeriğini dosyaya veya veritabanına kaydeder.
+
+---
+
+### 5. Ek Özellikler:
+- Kampanya ve İndirim Yönetimi:
+  - Belirli ürünler için dinamik indirim oranları belirlenebilir.
+- Kargo Takip Sistemi:
+  - Siparişler için kargo numarası eklenir ve kullanıcı sipariş durumu hakkında bilgilendirilir.
+- Raporlama:
+  - Admin panelinde satış istatistikleri ve stok durumları görüntülenebilir.
+
+### 6. Kullanılabilecek Teknolojiler:
+- Programlama Dili: Java
+- Veri Tabanı: MySQL, PostgreSQL veya MongoDB.
+- Yedekleme: JSON, XML veya CSV formatında dosya tabanlı yedekleme.
+- Web Uygulama: Django, Spring Boot veya Node.js.
+- Arayüz:HTML/CSS.
+
+Bu sistem, modüler bir yapıda tasarlanarak kolayca genişletilebilir ve ölçeklenebilir hale getirilir.
+*/
